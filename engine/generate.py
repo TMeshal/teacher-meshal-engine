@@ -102,7 +102,8 @@ def claude(system, user, max_tokens=4000):
               "messages": [{"role": "user", "content": user}]},
         timeout=300,
     )
-    r.raise_for_status()
+    if not r.ok:
+        raise SystemExit(f"Claude API {r.status_code}: {r.text[:400]}")
     data = r.json()
     u = data.get("usage", {})
     print(f"[usage] in={u.get('input_tokens')} cache_read={u.get('cache_read_input_tokens')} out={u.get('output_tokens')}")
