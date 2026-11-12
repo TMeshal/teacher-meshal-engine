@@ -23,7 +23,7 @@ header{display:flex;align-items:center;justify-content:space-between;gap:24px}
 .kicker{display:inline-flex;align-items:center;gap:14px;font-weight:700;font-size:30px;color:#CFE6F5}
 .chip{background:var(--g);color:var(--navy);font-weight:900;font-size:28px;padding:10px 24px;border-radius:999px}
 .dot{width:12px;height:12px;border-radius:50%;background:var(--gold)}
-h1{font-family:TD;font-weight:900;font-size:86px;line-height:1.18;margin-top:54px;letter-spacing:0}
+h1{font-family:TD;font-weight:900;font-size:86px;line-height:1.18;margin-top:40px;letter-spacing:0}
 h1 em{font-style:normal;color:var(--gold)}
 .lead{font-size:38px;line-height:1.6;color:#D8E6F3;margin-top:22px;font-weight:500}
 .body{flex:1;display:flex;flex-direction:column;justify-content:center;gap:34px;padding:40px 0 30px}
@@ -43,11 +43,12 @@ h1 em{font-style:normal;color:var(--gold)}
 .cmp h3 i{width:22px;height:22px;border-radius:7px;background:var(--g);display:inline-block}
 .cmp .card:nth-child(2) h3 i{background:var(--gold)}
 .cmp li{list-style:none;font-size:40px;line-height:1.5;font-weight:700;padding:14px 0;border-top:2px dashed #0A193122}
+.mini{margin:6px 0 14px}.mini .blk{font-size:30px;padding:14px 20px 18px;white-space:normal;line-height:1.5}.mini .blk::before{display:none}.mini .blk .in{padding:0 14px}
 .verdict{background:var(--teal);color:var(--navy);border-radius:30px;padding:30px 40px;font-size:40px;font-weight:900;line-height:1.5;text-align:center}
 /* steps */
-.steps{display:flex;flex-direction:column;gap:26px;position:relative}
-.step{display:flex;gap:30px;align-items:center;background:var(--paper);color:var(--ink);border-radius:32px;padding:32px 40px}
-.step .n{flex:none;width:92px;height:92px;border-radius:28px;background:var(--navy);color:var(--gold);font-weight:900;font-size:54px;display:grid;place-items:center}
+.steps{display:flex;flex-direction:column;gap:16px;position:relative}
+.step{display:flex;gap:30px;align-items:center;background:var(--paper);color:var(--ink);border-radius:32px;padding:26px 40px}
+.step .n{flex:none;width:80px;height:80px;border-radius:28px;background:var(--navy);color:var(--gold);font-weight:900;font-size:54px;display:grid;place-items:center}
 .step h4{font-size:44px;font-weight:900;line-height:1.3}
 .step p{font-size:34px;line-height:1.5;color:#33435A;font-weight:500;margin-top:6px}
 /* mistake */
@@ -76,6 +77,21 @@ h1 em{font-style:normal;color:var(--gold)}
 .c-control{background:#FFAB19;color:#3a2a00}.c-sensing{background:#5CB1D6}.c-operators{background:#59C059}
 .c-variables{background:#FF8C1A}.c-pen{background:#0FBD8C}.c-myblocks{background:#FF6680}
 .cap{font-size:38px;line-height:1.6;color:#E7F1FA;font-weight:500}
+
+/* predict */
+.task{background:#ffffff12;border:2px solid #ffffff26;border-radius:26px;padding:22px 30px;font-size:34px;line-height:1.55;color:#E7F1FA;font-weight:500}
+.task b,.task em{color:var(--gold);font-style:normal;font-weight:700}
+.grid6{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.pq{background:var(--paper);border-radius:28px;padding:18px 22px 18px;display:flex;flex-direction:column;align-items:center;gap:16px;position:relative}
+.pq .no{position:absolute;top:14px;right:18px;width:46px;height:46px;border-radius:14px;background:var(--navy);color:var(--gold);font-weight:900;font-size:28px;display:grid;place-items:center}
+.op{display:inline-flex;align-items:center;gap:8px;background:#59C059;border-radius:999px;padding:8px 12px;color:#fff;font-weight:900;font-size:34px;box-shadow:inset 0 -5px 0 #0000002a;direction:rtl}
+.op .op{padding:6px 10px;font-size:30px;background:#59C059;border:3px solid #2F8F2F}
+.sym{font-size:44px;font-weight:900;padding:0 6px;line-height:1;font-family:Arial,sans-serif}
+.num{background:#fff;color:#333;border-radius:999px;min-width:58px;padding:2px 14px;text-align:center;font-weight:900;font-size:32px}
+.ans{font-weight:900;font-size:40px;color:var(--navy);background:var(--gold);border-radius:16px;padding:4px 26px;min-width:120px;text-align:center}
+.ans.q{background:#E4ECF5;color:#9FB0C4}
+.blk.hl{outline:7px solid var(--gold);outline-offset:4px}
+.flag{display:inline-block;width:42px;height:42px;vertical-align:middle;margin:0 6px}
 /* statement */
 .st{font-family:TD;font-weight:900;font-size:96px;line-height:1.3}
 .st em{font-style:normal;color:var(--gold)}
@@ -106,19 +122,24 @@ function render(d){
     const isTxt=/[؀-ۿ]/.test(d.big||'');
     mid=`<h1>${fmt(d.title)}</h1><div class="body"><div class="big ${isTxt?'txt':''}">${fmt(d.big)}</div><div class="card"><p>${fmt(d.explain)}</p></div>${d.tip?`<div class="tip"><b>للمعلم</b><span>${fmt(d.tip)}</span></div>`:''}</div>`;
   }else if(d.layout==='compare'){
-    const col=c=>`<div class="card"><h3><i></i>${fmt(c.label)}</h3><ul>${(c.points||[]).map(p=>`<li>${fmt(p)}</li>`).join('')}</ul></div>`;
+    const mb=b=>b?`<div class="mini"><div class="blk c-${b.cat}">${esc(b.text).replace(/\[([^\]]*)\]/g,'<span class="in">$1</span>')}</div></div>`:'';
+    const col=c=>`<div class="card"><h3><i></i>${fmt(c.label)}</h3>${mb(c.block)}<ul>${(c.points||[]).map(p=>`<li>${fmt(p)}</li>`).join('')}</ul></div>`;
     mid=`<h1>${fmt(d.title)}</h1><div class="body"><div class="cmp">${col(d.right)}${col(d.left)}</div>${d.verdict?`<div class="verdict">${fmt(d.verdict)}</div>`:''}</div>`;
   }else if(d.layout==='steps'){
-    mid=`<h1>${fmt(d.title)}</h1><div class="body"><div class="steps">${d.steps.map((s,i)=>`<div class="step"><div class="n">${'١٢٣٤'[i]}</div><div><h4>${fmt(s.t)}</h4>${s.d?`<p>${fmt(s.d)}</p>`:''}</div></div>`).join('')}</div></div>`;
+    mid=`<h1>${fmt(d.title)}</h1><div class="body"><div class="steps">${d.steps.map((s,i)=>`<div class="step"><div class="n">${'١٢٣٤'[i]}</div><div><h4>${fmt(s.t)}</h4>${s.d?`<p>${fmt(s.d)}</p>`:''}</div></div>`).join('')}</div>${d.task?`<div class="task">${fmt(d.task)}</div>`:''}</div>`;
   }else if(d.layout==='mistake'){
     mid=`<h1>${fmt(d.title)}</h1><div class="body mk"><div class="card bad"><div class="ic">✕</div><div><div class="lbl">الخطأ الشائع</div><p>${fmt(d.wrong)}</p></div></div><div class="card good"><div class="ic">✓</div><div><div class="lbl">الصواب</div><p>${fmt(d.right)}</p></div></div>${d.why?`<div class="why">${fmt(d.why)}</div>`:''}</div>`;
   }else if(d.layout==='scratch'){
-    const txt=b=>esc(b.text).replace(/\[([^\]]*)\]/g,'<span class="in">$1</span>');
+    const FLAG='<svg class="flag" viewBox="0 0 24 24"><path d="M5 3v18" stroke="#2E7D32" stroke-width="2.5"/><path d="M6 4h12l-3 4 3 4H6z" fill="#4CBF56" stroke="#2E7D32" stroke-width="1.2"/></svg>';
+    const txt=b=>esc(b.text).replace(/\[([^\]]*)\]/g,'<span class="in">$1</span>').replace('{flag}',FLAG);
     // يبني المقطع شجرة: لبنة التحكم تحتضن ما بعدها من لبنات أعمق منها (شكل C كما في سكراتش)
     const build=(arr,lvl)=>{let h='';while(arr.length&&(arr[0].indent||0)>=lvl){const b=arr.shift();
       if(arr.length&&(arr[0].indent||0)>(b.indent||0)){h+=`<div class="cwrap k-${b.cat}"><div class="blk c-${b.cat} ctop">${txt(b)}</div><div class="cbody">${build(arr,(b.indent||0)+1)}</div><div class="cbot c-${b.cat}"></div></div>`;}
-      else h+=`<div class="blk c-${b.cat} ${b.hat?'hat':''}">${txt(b)}</div>`;}return h;};
-    mid=`<h1>${fmt(d.title)}</h1><div class="body"><div class="stage">${build(d.blocks.map(b=>({...b})),0)}</div>${d.caption?`<div class="cap">${fmt(d.caption)}</div>`:''}</div>`;
+      else h+=`<div class="blk c-${b.cat} ${b.hat?'hat':''} ${b.hl?'hl':''}">${txt(b)}</div>`;}return h;};
+    mid=`<h1>${fmt(d.title)}</h1><div class="body">${d.task?`<div class="task">${fmt(d.task)}</div>`:''}<div class="stage">${build(d.blocks.map(b=>({...b})),0)}</div>${d.caption?`<div class="cap">${fmt(d.caption)}</div>`:''}</div>`;
+  }else if(d.layout==='predict'){
+    const rep=e=>typeof e==='object'?`<span class="op">${rep(e.a)}<span class="sym">${esc(e.op)}</span>${rep(e.b)}</span>`:`<span class="num">${esc(e)}</span>`;
+    mid=`<h1>${fmt(d.title)}</h1><div class="body" style="gap:24px">${d.task?`<div class="task">${fmt(d.task)}</div>`:''}<div class="grid6">${d.items.map((it,i)=>`<div class="pq"><div class="no">${'١٢٣٤٥٦'[i]}</div><div style="margin-top:26px">${rep(it.e)}</div><div class="ans ${d.answers?'':'q'}">${d.answers?esc(it.r):'؟'}</div></div>`).join('')}</div></div>`;
   }else{ // statement
     mid=`<div class="body" style="gap:44px"><div class="bar"></div><div class="st">${fmt(d.title)}</div>${d.sub?`<div class="sub">${fmt(d.sub)}</div>`:''}</div>`;
   }
